@@ -15,7 +15,7 @@ const app = express();
 // Middleware para parsear JSON
 app.use(json());
 app.use(cors({
-  origin: 'http://localhost:5173'
+  origin: process.env.CORS_ORIGIN
 }));
 
 // Conexión a la base de datos
