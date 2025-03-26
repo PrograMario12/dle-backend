@@ -1,4 +1,4 @@
-import { getAll, getById, create, update, deleteItemModel, getByStationId } from '../models/sideModel.js';
+import { getAll, getById, create, update, deleteItemModel, getByStationId, getTypeSides } from '../models/sideModel.js';
 
 export const getAllSides = async (req, res) => {
     try {
@@ -84,5 +84,19 @@ export const deleteSide = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: 'Error al eliminar la posición' });
+    }
+};
+
+export const getAllTypeSides = async (req, res) => {
+    try {
+        const typeSides = await getTypeSides(req.pool);
+        res.json(typeSides);
+    } catch (error) {
+        console.error('Error al obtener los tipos de lados:', error);
+        res.status(500).json({ 
+            error: 'Error al obtener los tipos de lados',
+            message: error.message,
+            stack: error.stack
+        });
     }
 };

@@ -7,6 +7,7 @@ import areaAssetRoutes from './routes/areaAssetRoutes.js';
 import modelAssetRoutes from './routes/modelAssetRoutes.js';
 import stationRoutes from './routes/stationRoutes.js';
 import sideRoutes from './routes/sideRoutes.js';
+import configRoutes from './routes/configRoutes.js';
 
 dotenv.config();
 const { Pool } = pkg;
@@ -44,5 +45,6 @@ app.use('/area-assets', areaAssetRoutes);
 app.use('/model-assets', modelAssetRoutes);
 app.use('/stations', stationRoutes);
 app.use('/sides', sideRoutes);
+app.use('/config', configRoutes)
 
 export default app;
