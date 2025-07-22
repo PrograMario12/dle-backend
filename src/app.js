@@ -8,6 +8,10 @@ import modelAssetRoutes from './routes/modelAssetRoutes.js';
 import stationRoutes from './routes/stationRoutes.js';
 import sideRoutes from './routes/sideRoutes.js';
 import configRoutes from './routes/configRoutes.js';
+import registerRouter from './routes/registerRoutes.js';
+import attendanceRoutes from './routes/attendanceRoutes.js';
+import sidesWorkstationsRoutes from './routes/sidesWorkstationsRoutes.js';
+import registerEntryExit from './routes/registerEntryExitRoutes.js';
 
 dotenv.config();
 const { Pool } = pkg;
@@ -26,7 +30,8 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
-  schema: process.env.DB_SCHEMA
+  schema: process.env.DB_SCHEMA,
+  timezone: 'America/Mexico_City'
 });
 
 app.use((req, res, next) => {
@@ -46,5 +51,9 @@ app.use('/model-assets', modelAssetRoutes);
 app.use('/stations', stationRoutes);
 app.use('/sides', sideRoutes);
 app.use('/config', configRoutes)
+app.use('/register', registerRouter);
+app.use('/attendance', attendanceRoutes);
+app.use('/sides-workstations', sidesWorkstationsRoutes)
+app.use('/register-entry-exit', registerEntryExit);
 
 export default app;
