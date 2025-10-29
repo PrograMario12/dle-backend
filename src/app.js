@@ -20,7 +20,7 @@ const app = express();
 // Middleware para parsear JSON
 app.use(json());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN
+  origin: JSON.parse(process.env.CORS_ORIGIN)
 }));
 
 // Conexión a la base de datos
