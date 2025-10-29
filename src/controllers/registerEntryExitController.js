@@ -2,7 +2,6 @@ import {getLastRegister, registerEntry, registerExit} from '../models/registerEn
 
 export const getLastRegisterControl = async (req, res) => {
     try {
-        console.log('el id es ' , req.params.id);
         const sides = await getLastRegister(req.pool, req.params.id);
         res.json(sides);
     } catch (error) {
@@ -18,6 +17,7 @@ export const getLastRegisterControl = async (req, res) => {
 export async function registerEntryControl(req, res) {
     try {
         const newItem = await registerEntry(req.pool, req.body);
+        console.log('newItem:', newItem);
         res.status(201).json(newItem);
     } catch (error) {
         console.error('Error al crear el registro:', error);
