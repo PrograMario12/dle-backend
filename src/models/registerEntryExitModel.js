@@ -11,9 +11,21 @@ export async function getLastRegister(pool, id) {
         FROM ${schema}.register_entry_exit
         WHERE card_number_employee = $1
         ORDER BY entry_hour DESC
+            LIMIT 1
+    `, [id]);
+
+    const resultProd = await pool.query(`
+        SELECT id_register
+        FROM ${schemaProd}.registers
+        WHERE id_employee = $1
+        ORDER BY date_register DESC, entry_hour DESC
         LIMIT 1
     `, [id]);
-    return result.rows;
+
+    return {
+        registerEntryExit: result.rows,
+        registersProd: resultProd.rows
+    };
 }
 
 export async function registerEntry(pool, res) {
@@ -45,7 +57,7 @@ export async function registerEntry(pool, res) {
 }
 
 export async function registerExit(pool, body) {
-    const { register_id } = body;
+    const { register_id, id_register_prod } = body;
     const now = new Date();
     const mexicoDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
     const formattedDate = `${mexicoDate.getDate()}/${mexicoDate.getMonth() + 1}/${mexicoDate.getFullYear()}, ${mexicoDate.getHours().toString().padStart(2, '0')}:${mexicoDate.getMinutes().toString().padStart(2, '0')}:${mexicoDate.getSeconds().toString().padStart(2, '0')}`;
@@ -62,7 +74,7 @@ export async function registerExit(pool, body) {
     UPDATE ${schemaProd}.registers
     SET exit_hour = $1
     WHERE id_register = $2
-    `, [onlyTime, register_id]);
+    `, [onlyTime, id_register_prod]);
 
     return result.rows[0];
 }
